@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <title>Simple Task Queue Channel API</title>
+        <script src='/_ah/channel/jsapi'></script>
+    </head>
+    <body>
+        <script type='text/javascript'>
+            onOpened = function() {};
+            onMessage = function(message) {
+                var messageBox = document.getElementById("messageBox");
+                messageBox.innerHTML = message.data;
+            };
+            onError = function() {};
+            onClose = function() {};
+            channel = new goog.appengine.Channel('{{token}}');
+            socket = channel.open();
+            socket.onopen = onOpened;
+            socket.onmessage = onMessage;
+            socket.onerror = onError;
+            socket.onclose = onClose;
+        </script>
+        <form method="post" action="/">
+            <input type="text" name="key" value="{{ key }}">
+            <input type="submit" name="submit" value="Receive Messages">
+        </form>
+        <div id="messageBox"><!-- message should go in here --></div>
+    </body>
+</html>
